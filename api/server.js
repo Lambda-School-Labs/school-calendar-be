@@ -12,11 +12,13 @@ server.use(express.json());
 //setting up routes
 const userRouter = require('../routes/user-router');
 const authRouter = require('../auth/auth-router')
+const calendarRouter = require('../routes/calendar-routes');
+
 
 //routes
 server.use('/api/users', userRouter);
 server.use('/api/auth', authRouter);
-
+server.use('/api/calendar' , calendarRouter)
 //testing server
 server.get('/', (req, res) => {
     res.send('api is running')

@@ -14,14 +14,6 @@ exports.up = function(knex) {
      table.increments();
     //  table.string("calendarName")
      table.integer("calendarId")
-<<<<<<< HEAD
-  })    
-  .createTable("Events" , table => {
-    // table.increments();
-    table.integer("eventId")
-    table.increments('eventName')
-    table.increments('eventInfo')
-=======
   })
   .createTable('userCalendars', table => {
     table.increments()
@@ -54,7 +46,6 @@ exports.up = function(knex) {
     table.increments();
     table.string('eventName')
     table.string('eventInfo')
->>>>>>> bf0c94f0674f2dda5bc71d860574b1bdd6410e0c
   })
   .createTable('calendarEvents' , table => {
     table.increments()
