@@ -7,7 +7,7 @@ exports.up = function(knex) {
       table.string('email').notNullable().unique();
       table.string('password').notNullable();
       table.boolean('isAdmin').notNullable().defaultTo(false);
-      table.integer('userId').unique();
+      // table.integer('userId').unique();
       
   }) 
   // .createTable("userCalendars" , table => {
@@ -18,11 +18,11 @@ exports.up = function(knex) {
   // })  
   .createTable("Calendars" , table => {
      table.increments();
-     table.string("calendarName")
+    //  table.string("calendarName")
      table.integer("calendarId")
   })    
   .createTable("Events" , table => {
-    table.increments();
+    // table.increments();
     table.integer("eventId")
     table.increments('eventName')
     table.increments('eventInfo')
