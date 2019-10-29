@@ -1,22 +1,16 @@
 
 exports.up = function(knex) {
   return knex.schema 
-  .createTable('usersLogin', table => {
+  .createTable('users', table => {
       table.increments();
-      table.string('username', 255).notNullable();
+      table.string('name', 255).notNullable();
+      table.string('username', 255).notNullable().unique();
       table.string('email').notNullable().unique();
       table.string('password').notNullable();
       table.boolean('isAdmin').notNullable().defaultTo(false);
-      // table.integer('userId').unique();
       
   }) 
-  // .createTable("userCalendars" , table => {
-  //   table.increments();
-  //   table.integer("userCalendarId")
-  //   table.integer("	userId").unique()
-  //   table.integer("CalendarId")
-  // })  
-  .createTable("Calendars" , table => {
+  .createTable("calendars" , table => {
      table.increments();
     //  table.string("calendarName")
      table.integer("calendarId")
@@ -27,48 +21,30 @@ exports.up = function(knex) {
     table.increments('eventName')
     table.increments('eventInfo')
   })
-
-  .createTable('userCalendars', table => {
+  .createTable('calendarEvents' , table => {
     table.increments()
     table
-        .integer('user_id')
-        .unsigned()
-        .references('id')
-        .inTable('usersLogin')
-        .onDelete('CASCADE')
-        .onUpdate('CASCADE');
-   table
-        .integer('calenderId')
-        .unsigned()
-        .references('id')
-        .inTable('Calendars')
-        .onDelete('CASCADE')
-        .onUpdate('CASCADE');
-})  
-.createTable('CalendarEvents' , table => {
-table.increments()
-table
-    .integer('calenderId')
-    .unsigned()
-    .references('id')
-    .inTable('Calendars')
-    .onDelete('CASCADE')
-    .onUpdate('CASCADE');
-table 
-    .integer('eventsId') 
-    .unsigned()
-    .references('id')
-    .inTable('Events')
-    .onDelete('CASCADE')
-    .onUpdate('CASCADE');
-})
+      .integer('calenderId')
+      .unsigned()
+      .references('id')
+      .inTable('calendars')
+      .onDelete('CASCADE')
+      .onUpdate('CASCADE');
+    table 
+      .integer('eventsId') 
+      .unsigned()
+      .references('id')
+      .inTable('events')
+      .onDelete('CASCADE')
+      .onUpdate('CASCADE');
+  })
 }
 exports.down = function(knex) {
   return knex.schema
-  .dropTableIfExists("usersLogin")
-  .dropTableIfExists("userCalendars") 
-  .dropTableIfExists("calendars") 
-  .dropTableIfExists("CalendarEvent") 
-  .dropTableIfExists("Events") 
-  
+    .dropTableIfExists("calendarEvents")
+    .dropTableIfExists("events") 
+    .dropTableIfExists("adminCalendars") 
+    .dropTableIfExists("userCalendars")
+    .dropTableIfExists("calendars") 
+    .dropTableIfExists("users")
 };

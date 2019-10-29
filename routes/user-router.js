@@ -1,4 +1,3 @@
-  
 const router = require('express').Router();
 
 const authenticate = require('../auth/authenticate-middleware.js')

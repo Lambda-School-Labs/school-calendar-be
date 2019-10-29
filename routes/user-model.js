@@ -8,6 +8,7 @@ module.exports ={
     update,
     remove
 }
+
 function find() {
     return db('usersLogin')
     .select('id', 'username', 'password');
@@ -29,7 +30,6 @@ function findById(id) {
     .where({ id })
     .first();
 }
-
 function update(changes, id) {
     return db('usersLogin')
     .where('id', id)
@@ -38,7 +38,6 @@ function update(changes, id) {
         count > 0 ? this.get(id) : null 
     })
 }
-
 function remove(id) {
     return db('users')
     .where('id', id)
