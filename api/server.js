@@ -16,6 +16,7 @@ const calendarRouter = require('../routes/calendar-routes');
 const eventRouter = require('../routes/event-routes');
 const adminRouter = require('../routes/calAdmin-routes');
 const subscriberRouter = require('../routes/calSubs-routes');
+const twilioRouter = require('../routes/twilio-routes');
 
 //routes
 server.use('/users', userRouter);
@@ -24,6 +25,7 @@ server.use('/api/calendars/', calendarRouter);
 server.use('/api/calendars/', eventRouter);
 server.use('/api/calendars/', adminRouter);
 server.use('/api/calendars/', subscriberRouter);
+server.use('/api/twilio/', twilioRouter);
 
 //testing server
 server.get('/', (req, res) => {
