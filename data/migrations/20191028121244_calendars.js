@@ -29,6 +29,7 @@ exports.up = function(knex) {
 			.createTable("calendars", table => {
 				table.increments();
 				table.string("calendarName", 255);
+				table.string("calendarDescription", 255)
 				table.integer("calendarId");
 				table.timestamps(true, true);
 			})
