@@ -35,7 +35,7 @@ router.post("/register", validateRegistration, (req, res) => {
 });
 
 //post login
-router.post("/login", validateLogin, (req, res) => {
+router.post("/login", (req, res) => {
 	// implement login
 	let { username, email, password } = req.body;
 

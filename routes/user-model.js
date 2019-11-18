@@ -33,9 +33,8 @@ function getCalendar(id) {
             'uc.id',
             'c.calendarName',
             'c.calendarDescription',
-            'u.id',
             'u.username',
-            'c.id'
+            'uc.userId',
         )
         .where('uc.userId', id)
 }

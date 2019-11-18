@@ -12,7 +12,7 @@ function get(calendarId) {
 	return db("calendarEvents")
 		.where({ calendarId })
 		.join("events", "eventsId", "events.id")
-		.select("eventName", "eventInfo");
+		.select("eventName", "eventInfo","startDate");
 }
 function getAll() { 
     return (
