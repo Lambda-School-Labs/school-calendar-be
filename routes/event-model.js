@@ -7,39 +7,34 @@ module.exports = {
 	getById,
 	getAllEvents,
 	add,
+	addCalendarEvents,
 	remove,
 	update
 };
 
 function get(calendarId) {
-	return db("calendarEvents as ce")
-		.join("calendars as c", "c.id", "ce.calendarId")
-		.join("events as e", "e.id", "ce.eventId")
-		.where({ "c.id": calendarId });
-	// .join("events", "eventsId", "events.id")
-	// .select(
-	// 	"events",
-	// 	"eventTitle",
-	// 	"eventNote",
-	// 	"eventLocation",
-	// 	"startDate",
-	// 	"endDate",
-	// 	"startTime",
-	// 	"endTime",
-	// 	"isAllDayEvent",
-	// 	"isRepeatingEvent",
-	// 	"eventColor",
-	// 	"uuid"
-	// );
-}
-function getAllEvents() {
-	return db("users");
+	return db("calendarEvents")
+		.where({ calendarId })
+		.join("events", "eventId", "events.id")
+		.select(
+			"eventTitle",
+			"eventNote",
+			"eventLocation",
+			"startDate",
+			"endDate",
+			"startTime",
+			"endTime",
+			"isAllDayEvent",
+			"isRepeatingEvent",
+			"eventColor",
+			"uuid"
+		);
 }
 
 function getByCalendarEventsId(calendarEventsId) {
-	return db("calendarEvents as ce")
-		.where({ "ce.id": calendarEventsId })
-		.join("events", "ce.eventsId", "events.id")
+	return db("calendarEvents")
+		.where({ "calendarEvents.id": calendarEventsId })
+		.join("events", "calendarEvents.eventId", "events.id")
 		.select(
 			"events.id",
 			"eventTitle",
@@ -93,17 +88,20 @@ function getByUuid(uuid) {
 		)
 		.first();
 }
-function add(calendarId, event) {
+function add(event) {
 	event.uuid = uuidv1();
-
 	return db("events")
-		.insert(event)
-		.then(events => {
-			return db("calendarEvents")
-				.insert({ calendarid: calendarId, eventsId: events[0] })
-				.then(calendarEvents => {
-					return getByCalendarEventsId(calendarEvents[0]);
-				});
+		.insert(event, "id")
+		.then(ids => {
+			return ids[0];
+		});
+}
+
+function addCalendarEvents(calendarId, eventId) {
+	return db("calendarEvents")
+		.insert({ calendarId, eventId }, "id")
+		.then(calendarEventIds => {
+			return getByCalendarEventsId(calendarEventIds[0]);
 		});
 }
 

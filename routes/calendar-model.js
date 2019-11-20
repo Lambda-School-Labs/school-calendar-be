@@ -27,13 +27,14 @@ function getByUuid(uuid) {
 
 function addDefaultCalendar(adminId) {
 	const calendar = {
-		calendarName: "Calendar",
-		calendarDescription: "Default calendar",
+		calendarName: "Primary",
+		calendarDescription: "Primary calendar",
 		calendarColor: "#A35629",
+		isDefault: true,
 		uuid: uuidv1()
 	};
 	return db("calendars")
-		.insert(calendar)
+		.insert(calendar, "id")
 		.then(ids => {
 			const calendarId = ids[0];
 			return db("adminCalendars")
@@ -45,7 +46,7 @@ function addDefaultCalendar(adminId) {
 }
 function add(calendar) {
 	return db("calendars")
-		.insert(calendar)
+		.insert(calendar, "id")
 		.then(ids => {
 			return getById(ids[0]);
 		});

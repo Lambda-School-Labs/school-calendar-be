@@ -52,7 +52,7 @@ router.post("/login", (req, res) => {
 	// implement login
 	let { userId, password } = req.body;
 
-	Users.find(userId, password)
+	Users.find(userId)
 		.then(user => {
 			if (user && bcrypt.compareSync(password, user.password)) {
 				const token = generateToken({

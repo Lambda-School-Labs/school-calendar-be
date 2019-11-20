@@ -51,11 +51,13 @@ router.post(
 	// [authenticateUser, verifyUser, verifyCalendar],
 	async (req, res) => {
 		try {
-			const response = await Events.add(req.calendarId, req.body);
+			const eventId = await Events.add(req.body);
+			const calendarEvent = await Events.addCalendarEvents(
+				req.calendarId,
+				eventId
+			);
 
-			console.log("New event ", response);
-
-			res.status(200).json(response);
+			res.status(200).json(calendarEvent);
 		} catch (err) {
 			console.log("event POST error", err);
 			res.status(400).json({
@@ -66,20 +68,23 @@ router.post(
 	}
 );
 
-router.delete("/events/:event_uuid", async (req, res) => {
-	try {
-		console.log("EventId ", req.eventId);
-		const response = await Events.remove(req.eventId);
+router.delete(
+	"/events/:event_uuid",
+	[authenticateUser, verifyUser, verifyEvent],
+	async (req, res) => {
+		try {
+			const response = await Events.remove(req.eventId);
 
-		res.status(200).json(response);
-	} catch (err) {
-		console.log("event DELETE error", err);
-		res.status(400).json({
-			message: "error deleting event",
-			error: `${err}`
-		});
+			res.status(200).json(response);
+		} catch (err) {
+			console.log("event DELETE error", err);
+			res.status(400).json({
+				message: "error deleting event",
+				error: `${err}`
+			});
+		}
 	}
-});
+);
 
 router.put(
 	"/events/:id",

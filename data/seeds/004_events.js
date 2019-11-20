@@ -3,12 +3,11 @@ const moment = require("moment");
 exports.seed = function(knex) {
 	// Deletes ALL existing entries
 	return knex("events")
-		.truncate()
+		.del()
 		.then(function() {
 			// Inserts seed entries
 			return knex("events").insert([
 				{
-					id: 1,
 					eventTitle: "Team Standup",
 					eventNote: "Discussing team performance.",
 					eventLocation: "The Quad",
@@ -28,7 +27,6 @@ exports.seed = function(knex) {
 					uuid: uuidv1()
 				},
 				{
-					id: 2,
 					eventTitle: "Fundraising Plan",
 					eventNote: "Planning fundraising in nearby shopping malls.",
 					eventLocation: "Building 1A, Birmingham HS",
@@ -51,7 +49,6 @@ exports.seed = function(knex) {
 					uuid: uuidv1()
 				},
 				{
-					id: 3,
 					eventTitle: "Regular Zoom conference",
 					eventNote: "Discussing players training plan.",
 					eventLocation: "Online",
