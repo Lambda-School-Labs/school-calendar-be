@@ -11,14 +11,15 @@ router.get("/", (req, res) => {
 			res.json({ users });
 		})
 		.catch(err => {
-			nsole.log(err);
+			console.log(err);
 			res.status(500).json({ message: `server 500 error` });
 		});
 });
 
 // get user calendars with user id
-router.get("/calendars", [authenticate, verify], async (req, res) => {
-	const { id } = req.user;
+router.get("/:id/calendars", [verify], async (req, res) => {
+	const id = req.user.id;
+	console.log(id);
 	try {
 		const calendars = await Users.getCalendars(id);
 

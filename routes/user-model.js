@@ -20,7 +20,7 @@ function get() {
 		"firstName",
 		"lastName",
 		"email",
-		"phone",
+		"phoneNumber",
 		"password",
 		"isAdmin",
 		"uuid"
@@ -39,7 +39,7 @@ function getCalendars(userId) {
 			"c.uuid"
 		)
 		.where({ "u.id": userId, "c.isDefault": true })
-		.then((calendars) => {
+		.then(calendars => {
 			return calendars[0];
 		});
 }
@@ -57,7 +57,7 @@ function getDefaultCalendar(userId) {
 			"c.uuid"
 		)
 		.where("u.id", userId)
-		.then((calendars) => {
+		.then(calendars => {
 			return calendars;
 		});
 }
@@ -75,7 +75,7 @@ function getCalendars(userId) {
 			"c.uuid"
 		)
 		.where("u.id", userId)
-		.then((calendars) => {
+		.then(calendars => {
 			return calendars;
 		});
 }
@@ -99,7 +99,7 @@ function find(userId, password) {
 function add(user) {
 	return db("users")
 		.insert(user, "id")
-		.then((ids) => {
+		.then(ids => {
 			return getById(ids[0]);
 		});
 }
@@ -113,7 +113,7 @@ function update(changes, id) {
 	return db("users")
 		.where("id", id)
 		.update(changes)
-		.then((count) => {
+		.then(count => {
 			count > 0 ? this.get(id) : null;
 		});
 }
