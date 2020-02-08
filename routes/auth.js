@@ -1,11 +1,10 @@
-const express = require("express");
+const router = require("express").Router();
 const passport = require("passport");
-const jwt = require("jsonwebtoken");
+// const jwt = require("jsonwebtoken");
 
 require("../config/passport-setup");
 require("dotenv").config();
 
-const router = express.Router();
 
 // auth with google
 router.get(
@@ -28,7 +27,7 @@ router.get(
   (req, res) => {
     // const token = jwt.sign({ id: req.user._id }, process.env.TOKEN_SECRET);
     // res.status(200).json({ token });
-res.redirect('http://localhost:3001/home')
+res.redirect('/api/user/profile')
   }
 );
 
