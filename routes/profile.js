@@ -7,7 +7,7 @@ const verifyToken = require("../middleware/verifyToken");
 
 // Get User
 router.get("/profile", (req, res) => {
-  res.send(req.user.name)
+  res.send(req.user)
   // try {
   //   const profile = await User.findOne({ _id: req.params.id });
   //   // const events = await Event.find({
