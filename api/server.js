@@ -1,24 +1,17 @@
-//Setup middleware
-const express = require("express");
-const cors = require("cors");
-const helmet = require("helmet");
-
-//Pull in routes
-const authRoute = require("../routes/auth");
-const profileRoute = require("../routes/profile");
-
-//Outside libraries
-const cookieSession = require('cookie-session');
-const passport = require('passport');
-
 //Require env variables
 require("dotenv").config();
+
+// Require
+const express = require('express');
+const cookieSession = require('cookie-session');
+const apiRouter = require('./apiRouter');
+const configureMiddleware = require('./configMiddleware');
 const server = express();
 
-//Invoke middleware
-server.use(helmet());
-server.use(cors());
-server.use(express.json()); 
+
+//Passport Config
+const passport = require('passport');
+const passportSetup = require('../config/passport-setup');
 
 // Set cookie with 24hr session
 server.use(cookieSession({
@@ -30,13 +23,12 @@ server.use(cookieSession({
 server.use(passport.initialize());
 server.use(passport.session())
 
-//Invoke routes
-server.use("/api/auth", authRoute);
-server.use("/api/user", profileRoute);
 
-//GET endpoint for checking app
-server.get("/", (req, res) => {
-  res.send({ api: "Ok", dbenv: process.env.DB_ENV });
-});
+configureMiddleware(server);
+
+server.use('/', apiRouter);
 
 module.exports = server;
+
+
+

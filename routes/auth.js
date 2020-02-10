@@ -10,7 +10,7 @@ require("dotenv").config();
 router.get(
   "/google",
   passport.authenticate("google", {
-    session: false,
+    // session: false,
     scope: [
       "profile",
       "email",
@@ -23,12 +23,13 @@ router.get(
 // callback route for google to redirect to
 router.get(
   "/google/redirect",
-  passport.authenticate("google", { session: false }),
+  passport.authenticate("google"),
   (req, res) => {
-    // const token = jwt.sign({ id: req.user._id }, process.env.TOKEN_SECRET);
-    // res.status(200).json({ token });
-res.redirect('/api/user/profile')
+    res.redirect('/api/user/profile')
   }
-);
-
-module.exports = router;
+  );
+  
+  module.exports = router;
+  
+  // const token = jwt.sign({ id: req.user._id }, process.env.TOKEN_SECRET);
+  // res.status(200).json({ token });
